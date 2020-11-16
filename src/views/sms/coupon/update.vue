@@ -1,12 +1,13 @@
 <template> 
-  <coupon-detail :isEdit="true"></coupon-detail>
+    <coupon-detail :isEdit="true"></coupon-detail>
 </template>
 <script>
-  import CouponDetail from './components/CouponDetail'
-  export default {
+import CouponDetail from './components/CouponDetail'
+
+export default {
     name: 'updateCoupon',
-    components: { CouponDetail }
-  }
+    components: {CouponDetail}
+}
 </script>
 <style scoped>
 </style>

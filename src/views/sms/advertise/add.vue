@@ -1,12 +1,13 @@
 <template> 
-  <home-advertise-detail :isEdit="false"></home-advertise-detail>
+    <home-advertise-detail :isEdit="false"></home-advertise-detail>
 </template>
 <script>
-  import HomeAdvertiseDetail from './components/HomeAdvertiseDetail'
-  export default {
+import HomeAdvertiseDetail from './components/HomeAdvertiseDetail'
+
+export default {
     name: 'addHomeAdvertise',
-    components: { HomeAdvertiseDetail }
-  }
+    components: {HomeAdvertiseDetail}
+}
 </script>
 <style></style>
 
