@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
 import Layout from '../views/layout/Layout'
@@ -32,7 +32,7 @@ export const constantRouterMap = [
             meta: {title: '首页', icon: 'home'}
         }]
     }
-]
+];
 
 export const asyncRouterMap = [
     {
@@ -41,12 +41,13 @@ export const asyncRouterMap = [
         redirect: '/pms/product',
         name: 'pms',
         meta: {title: '商品', icon: 'product'},
-        children: [{
-            path: 'product',
-            name: 'product',
-            component: () => import('@/views/pms/product/index'),
-            meta: {title: '商品列表', icon: 'product-list'}
-        },
+        children: [
+            {
+                path: 'product',
+                name: 'product',
+                component: () => import('@/views/pms/product/index'),
+                meta: {title: '商品列表', icon: 'product-list'}
+            },
             {
                 path: 'addProduct',
                 name: 'addProduct',
@@ -359,7 +360,7 @@ export const asyncRouterMap = [
         ]
     },
     {path: '*', redirect: '/404', hidden: true}
-]
+];
 
 export default new Router({
     // mode: 'history', //后端支持可开

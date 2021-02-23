@@ -1,38 +1,33 @@
 <template>
-    <scroll-bar>
-        <el-menu
-            mode="vertical"
-            :show-timeout="200"
-            :default-active="$route.path"
-            :collapse="isCollapse"
-            background-color="#304156"
-            text-color="#bfcbd9"
-            active-text-color="#409EFF"
-        >
-            <sidebar-item :routes="routes"></sidebar-item>
-        </el-menu>
-    </scroll-bar>
+  <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-menu
+      :show-timeout="200"
+      :default-active="$route.path"
+      :collapse="isCollapse"
+      mode="vertical"
+      background-color="#304156"
+      text-color="#bfcbd9"
+      active-text-color="#409EFF"
+    >
+      <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path"/>
+    </el-menu>
+  </el-scrollbar>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
 import SidebarItem from './SidebarItem'
-import ScrollBar from '@/components/ScrollBar'
 
 export default {
-    components: {SidebarItem, ScrollBar},
-    computed: {
-        ...mapGetters([
-            'sidebar',
-            'routers'
-        ]),
-        routes() {
-            // return this.$router.options.routes
-            return this.routers
-        },
-        isCollapse() {
-            return !this.sidebar.opened
-        }
+  components: {SidebarItem},
+  computed: {
+    ...mapGetters([
+      'permission_routes',
+      'sidebar'
+    ]),
+    isCollapse() {
+      return !this.sidebar.opened
     }
+  }
 }
 </script>

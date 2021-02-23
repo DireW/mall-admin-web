@@ -10,7 +10,15 @@ module.exports = {
         // Paths
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
-        proxyTable: {},
+        proxyTable: {
+            '/admin': {
+                target: 'http://localhost:9080/',
+                changeOrigin: true,  //是否跨域
+                pathRewrite: {
+                    '^/admin': '/admin'   //需要rewrite重写的
+                }
+            },
+        },
 
         // Various Dev Server settings
         host: 'localhost', // can be overwritten by process.env.HOST

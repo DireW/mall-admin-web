@@ -6,7 +6,7 @@
                     <div class="out-border">
                         <div class="layout-title">后台项目</div>
                         <div class="color-main address-content">
-                            <a href="https://github.com/macrozheng/mall">mall</a>
+                            <a href="#">mall</a>
                         </div>
                     </div>
                 </el-col>
@@ -14,7 +14,7 @@
                     <div class="out-border">
                         <div class="layout-title">前端项目</div>
                         <div class="color-main address-content">
-                            <a href="https://github.com/macrozheng/mall-admin-web">mall-admin-web</a>
+                            <a href="#">mall-admin-web</a>
                         </div>
                     </div>
                 </el-col>
@@ -22,7 +22,7 @@
                     <div class="out-border">
                         <div class="layout-title">学习教程</div>
                         <div class="color-main address-content">
-                            <a href="https://github.com/macrozheng/mall-learning">mall-learning</a>
+                            <a href="#">mall-learning</a>
                         </div>
                     </div>
                 </el-col>
@@ -51,14 +51,6 @@
                         <div class="total-value">￥5000.00</div>
                     </div>
                 </el-col>
-                <!--<el-col :span="6">-->
-                <!--<div class="total-frame">-->
-                <!--<svg-icon icon-class="total-week" class="total-icon">-->
-                <!--</svg-icon>-->
-                <!--<div class="total-title">近7天销售总额</div>-->
-                <!--<div class="total-value">￥50000.00</div>-->
-                <!--</div>-->
-                <!--</el-col>-->
             </el-row>
         </div>
         <el-card class="mine-layout">
@@ -360,9 +352,9 @@ export default {
 
 <style scoped>
     .app-container {
-        margin-top: 40px;
-        margin-left: 120px;
-        margin-right: 120px;
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
     }
 
     .address-layout {
@@ -446,10 +438,10 @@ export default {
 
     .mine-layout {
         position: absolute;
-        right: 140px;
-        top: 107px;
+        right: 80px;
+        top: 40px;
         width: 250px;
-        height: 235px;
+        height: 230px;
     }
 
     .address-content {

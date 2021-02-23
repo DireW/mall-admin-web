@@ -57,18 +57,17 @@
                 <span class="font-title-large"><span class="color-main font-extra-large">关注公众号</span>回复<span
                     class="color-main font-extra-large">体验</span>获取体验账号</span>
                 <br>
-                <img src="http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/banner/qrcode_for_macrozheng_258.jpg"
-                     width="160" height="160" style="margin-top: 10px">
+                <img src="" width="160" height="160" style="margin-top: 10px">
             </div>
             <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogConfirm">确定</el-button>
-      </span>
+                <el-button type="primary" @click="dialogConfirm">确定</el-button>
+            </span>
         </el-dialog>
     </div>
 </template>
 
 <script>
-import {isvalidUsername} from '@/utils/validate';
+import {isValidUsername} from '@/utils/validate';
 import {setSupport, getSupport, setCookie, getCookie} from '@/utils/support';
 import login_center_bg from '@/assets/images/login_center_bg.png'
 
@@ -76,7 +75,7 @@ export default {
     name: 'login',
     data() {
         const validateUsername = (rule, value, callback) => {
-            if (!isvalidUsername(value)) {
+            if (!isValidUsername(value)) {
                 callback(new Error('请输入正确的用户名'))
             } else {
                 callback()

@@ -6,26 +6,22 @@ function hasPermission(menus, route) {
         let currMenu = getMenu(route.name, menus);
         if (currMenu != null) {
             //设置菜单的标题、图标和可见性
-            if (currMenu.title != null && currMenu.title !== '') {
+            if (currMenu.title) {
                 route.meta.title = currMenu.title;
             }
-            if (currMenu.icon != null && currMenu.title !== '') {
+            if (currMenu.icon) {
                 route.meta.icon = currMenu.icon;
             }
             if (currMenu.hidden != null) {
                 route.hidden = currMenu.hidden !== 0;
             }
-            if (currMenu.sort != null && currMenu.sort !== '') {
+            if (currMenu.sort) {
                 route.sort = currMenu.sort;
             }
             return true;
         } else {
             route.sort = 0;
-            if (route.hidden !== undefined && route.hidden === true) {
-                return true;
-            } else {
-                return false;
-            }
+            return route.hidden !== undefined && route.hidden === true;
         }
     } else {
         return true
