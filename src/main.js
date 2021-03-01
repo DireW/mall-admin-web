@@ -16,6 +16,12 @@ import store from './store'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import axios from '@/utils/request';
+Vue.prototype.$axios = axios;
+
+import dayjs from 'dayjs';
+Vue.prototype.$dayjs = dayjs;
+
 Vue.use(ElementUI, {locale});
 Vue.use(VCharts);
 

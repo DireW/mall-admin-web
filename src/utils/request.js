@@ -7,7 +7,7 @@ import {getToken} from '@/utils/auth'
 const service = axios.create({
     baseURL: process.env.BASE_API, // api的base_url
     timeout: 15000 // 请求超时时间
-})
+});
 
 // request拦截器
 service.interceptors.request.use(config => {
@@ -19,7 +19,7 @@ service.interceptors.request.use(config => {
     // Do something with request error
     console.log(error) // for debug
     Promise.reject(error)
-})
+});
 
 // respone拦截器
 service.interceptors.response.use(
@@ -27,13 +27,13 @@ service.interceptors.response.use(
         /**
          * code为非200是抛错 可结合自己业务进行修改
          */
-        const res = response.data
+        const res = response.data;
         if (res.code !== 200) {
             Message({
                 message: res.message,
                 type: 'error',
                 duration: 3 * 1000
-            })
+            });
 
             // 401:未登录;
             if (res.code === 401) {
@@ -53,14 +53,14 @@ service.interceptors.response.use(
         }
     },
     error => {
-        console.log('err' + error)// for debug
+        console.log('err' + error);// for debug
         Message({
             message: error.message,
             type: 'error',
             duration: 3 * 1000
-        })
+        });
         return Promise.reject(error)
     }
-)
+);
 
 export default service

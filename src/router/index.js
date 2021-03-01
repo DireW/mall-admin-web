@@ -294,7 +294,7 @@ export const asyncRouterMap = [
     {
         path: '/ums',
         component: Layout,
-        redirect: '/ums/admin',
+        redirect: '/ums/agency',
         name: 'ums',
         meta: {title: '权限', icon: 'ums'},
         children: [
@@ -303,6 +303,12 @@ export const asyncRouterMap = [
                 name: 'admin',
                 component: () => import('@/views/ums/admin/index'),
                 meta: {title: '用户列表', icon: 'ums-admin'}
+            },
+            {
+                path: 'agency',
+                name: 'agency',
+                component: () => import('@/views/ums/agency/index'),
+                meta: {title: '员工列表', icon: 'ums-admin'}
             },
             {
                 path: 'role',
