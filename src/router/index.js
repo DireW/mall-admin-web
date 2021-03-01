@@ -356,6 +356,20 @@ export const asyncRouterMap = [
                 component: () => import('@/views/ums/resource/categoryList'),
                 meta: {title: '资源分类'},
                 hidden: true
+            },
+            {
+                path: 'profile/notice',
+                name: 'profileNotice',
+                component: () => import('@/views/ums/profile/notice'),
+                meta: {title: '消息通知'},
+                hidden: true
+            },
+            {
+                path: 'profile/password',
+                name: 'profilePassword',
+                component: () => import('@/views/ums/profile/password'),
+                meta: {title: '修改密码'},
+                hidden: true
             }
         ]
     },

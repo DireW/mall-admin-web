@@ -22,7 +22,9 @@
                 <el-input v-model="menu.name"></el-input>
             </el-form-item>
             <el-form-item label="前端图标：" prop="icon">
-                <el-input v-model="menu.icon" style="width: 80%"></el-input>
+                <el-select v-model="menu.icon" placeholder="请选择图标">
+                    <el-option v-for="icon in iconNames" :key="icon" :label="icon" :value="icon" />
+                </el-select>
                 <svg-icon style="margin-left: 8px" :icon-class="menu.icon"></svg-icon>
             </el-form-item>
             <el-form-item label="是否显示：">
@@ -44,6 +46,7 @@
 
 <script>
 import {fetchList, createMenu, updateMenu, getMenu} from '@/api/menu';
+import iconList from '@/icons'
 
 const defaultMenu = {
     title: '',
@@ -63,6 +66,7 @@ export default {
     },
     data() {
         return {
+            iconNames: iconList.map(iconCom => iconCom.default.id.replace(/^icon-/, '')),
             menu: Object.assign({}, defaultMenu),
             selectMenuList: [],
             rules: {
@@ -82,6 +86,7 @@ export default {
         }
     },
     created() {
+        console.info('iconList', this.iconList);
         if (this.isEdit) {
             getMenu(this.$route.query.id).then(response => {
                 this.menu = response.data;

@@ -2,10 +2,15 @@ import request from '@/utils/request'
 
 export function changePassword(data) {
     return request({
-        url: '/profile/password',
+        url: '/admin/updatePassword',
         method: 'post',
         data
     })
+}
+
+// todo
+export function rmNotice() {
+    return new Promise(resolve => resolve(0))
 }
 
 export function nNotice() {
