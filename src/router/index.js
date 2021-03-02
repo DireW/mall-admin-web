@@ -1,6 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+// 重写push和replace方法
+const originalPush = Router.prototype.push;
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+};
+const originalReplace = Router.prototype.replace;
+Router.prototype.replace = function push(location) {
+    return originalReplace.call(this, location).catch(err => err)
+};
+
 Vue.use(Router);
 
 /* Layout */
@@ -382,9 +392,24 @@ export const asyncRouterMap = [
     {path: '*', redirect: '/404', hidden: true}
 ];
 
-export default new Router({
-    // mode: 'history', //后端支持可开
+// export default new Router({
+//     // mode: 'history', //后端支持可开
+//     scrollBehavior: () => ({y: 0}),
+//     routes: constantRouterMap
+// })
+//创建方法
+const createRouter = () => new Router({
+    mode: 'hash',
     scrollBehavior: () => ({y: 0}),
     routes: constantRouterMap
-})
+});
+
+const router = createRouter();
+
+export function resetRouter () {
+    const newRouter = createRouter();
+    router.matcher = newRouter.matcher // the relevant part
+}
+
+export default router;
 

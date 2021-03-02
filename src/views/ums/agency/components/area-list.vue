@@ -4,29 +4,17 @@
             <el-button size="small" type="primary" @click="addArea">新增区域</el-button>
             <el-button size="small" @click="refreshList">刷新</el-button>
         </div>
+
         <el-table ref="areaTableRef"
                   :data="areaList"
                   border
-                  style="width: 201px;"
-                  highlight-current-row
-                  current-row-key="id"
                   v-loading="loading">
-            <el-table-column label="名称" width="100">
+            <el-table-column label="名称" prop="name" align="center"/>
+            <el-table-column label="区域经理" prop="principalName" align="center"/>
+            <el-table-column label="操作" width="100" align="center">
                 <template slot-scope="{row, index}">
-                    <div class="text-td" @click="updateSelectedRow(row)">
-                        <div class="main-title" :title="row.name">
-                            {{row.name}}
-                        </div>
-                        <div class="sub-title" :title="row.principalName">
-                            经理：{{row.principalName}}
-                        </div>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column label="操作" width="100">
-                <template slot-scope="{row, index}">
-                    <el-button @click="editArea(row.id)" type="text" size="small">编辑</el-button>
-                    <el-button type="text" size="small">删除</el-button>
+                    <el-button type="text" size="small" @click="editArea(row)">编辑</el-button>
+                    <el-button type="text" size="small" @click="deleteArea(row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -54,6 +42,14 @@
 <script>
 export default {
     name: "area-list",
+    props: {
+        empList: {
+            type: Array,
+            default() {
+                return [];
+            }
+        }
+    },
     data() {
         return {
             loading: false,
@@ -69,7 +65,6 @@ export default {
             areaFormRules: {
                 name: [{required: true, message: '请填写区域名称', trigger: 'blur'}]
             },
-            empList: [{id: 1, name: '员工1'}, {id: 2, name: '员工2'}]
 
         }
     },
@@ -77,43 +72,66 @@ export default {
         this.refreshList();
     },
     methods: {
-        updateSelectedRow(area) {
-            if (this.currentAreaId === area.id) return;
-            this.currentAreaId = area.id;
-            this.$emit('choose-area', area);
-        },
         addArea() {
+            this.dialogTitle = '新增区域';
             this.areaForm = {
                 id: null,
                 name: '',
                 principalId: null
             };
-            this.$refs.areaFormRef.clearValidate();
+            this.$refs.areaFormRef && this.$refs.areaFormRef.clearValidate();
             this.dialogVisible = true;
         },
         editArea(area) {
+            this.dialogTitle = '编辑区域';
             this.areaForm = {
                 ...area
             };
-            this.$refs.areaFormRef.clearValidate();
+            this.$refs.areaFormRef && this.$refs.areaFormRef.clearValidate();
             this.dialogVisible = true;
         },
         saveArea() {
+            this.$refs.areaFormRef.validate(valid => {
+                if (!valid) return;
+                this.$axios.post('/admin/ums/agency/area/save-update', this.areaForm)
+                    .then(res => {
+                        this.refreshList();
+                    })
+                    .catch(err => {
+                        console.error("更新区域信息异常")
+                    })
+            });
             this.dialogVisible = false;
         },
+        deleteArea(id) {
+            this.$confirm('确定删除区域信息？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(_ => {
+                this.$axios.delete(`/admin/ums/agency/area/delete/${id}`)
+                    .then(res => {
+                        this.refreshList();
+                    })
+                    .catch(err => {
+                        console.error('删除区域失败', err);
+                    })
+            }).catch(_ => {
+
+            })
+        },
         refreshList() {
-            setTimeout(_ => {
-                this.areaList = [
-                    {id: 1, name: '区域一', principalId: 1, principalName: '张三'},
-                    {id: 2, name: '区域二', principalId: 2, principalName: '李四'},
-                ];
-                if (this.areaList.length === 0) {
-                    this.$refs.areaTableRef.setCurrentRow();
-                } else {
-                    this.$refs.areaTableRef.setCurrentRow(this.areaList[0]);
-                    this.updateSelectedRow(this.areaList[0]);
-                }
-            }, 5000);
+            this.loading = true;
+            this.$axios.get('/admin/ums/agency/area/list')
+                .then(res => {
+                    this.loading = false;
+                    this.areaList = res.data;
+                    this.$emit('update-area', res.data);
+                })
+                .catch(err => {
+                    this.loading = false;
+                    console.info('区域列表异常', err);
+                });
         },
         closeDialog(done) {
             this.areaForm = {
@@ -121,7 +139,7 @@ export default {
                 name: '',
                 principalId: null
             };
-            this.$refs.areaFormRef.clearValidate();
+            this.$refs.areaFormRef && this.$refs.areaFormRef.clearValidate();
             done();
         }
     }
