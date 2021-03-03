@@ -17,10 +17,10 @@
             </router-link>
         </scroll-pane>
         <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-            <li @click="refreshSelectedTag(selectedTag)">Refresh</li>
-            <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">Close</li>
-            <li @click="closeOthersTags">Close Others</li>
-            <li @click="closeAllTags(selectedTag)">Close All</li>
+            <li @click="refreshSelectedTag(selectedTag)">刷新</li>
+            <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭</li>
+            <li @click="closeOthersTags">关闭其他</li>
+            <li @click="closeAllTags(selectedTag)">关闭全部</li>
         </ul>
     </div>
 </template>
@@ -50,7 +50,7 @@ export default {
     },
     watch: {
         $route() {
-            this.addTags()
+            this.addTags();
             this.moveToCurrentTag()
         },
         visible(value) {
@@ -73,7 +73,7 @@ export default {
             return tag.meta && tag.meta.affix
         },
         filterAffixTags(routes, basePath = '/') {
-            let tags = []
+            let tags = [];
             routes.forEach(route => {
                 if (route.meta && route.meta.affix) {
                     const tagPath = path.resolve(basePath, route.path)
@@ -110,11 +110,12 @@ export default {
             return false
         },
         moveToCurrentTag() {
-            const tags = this.$refs.tag
+            const tags = this.$refs.tag;
             this.$nextTick(() => {
+                console.info('move to current tag', tags, this.$route);
                 for (const tag of tags) {
                     if (tag.to.path === this.$route.path) {
-                        this.$refs.scrollPane.moveToTarget(tag)
+                        this.$refs.scrollPane.moveToTarget(tag);
                         // when query is different then update
                         if (tag.to.fullPath !== this.$route.fullPath) {
                             this.$store.dispatch('tagsView/updateVisitedView', this.$route)
@@ -126,10 +127,10 @@ export default {
         },
         refreshSelectedTag(view) {
             this.$store.dispatch('tagsView/delCachedView', view).then(() => {
-                const {fullPath} = view
+                const {fullPath} = view;
                 this.$nextTick(() => {
                     this.$router.replace({
-                        path: '/redirect' + fullPath
+                        path: fullPath
                     })
                 })
             })
@@ -142,7 +143,7 @@ export default {
             })
         },
         closeOthersTags() {
-            this.$router.push(this.selectedTag)
+            this.$router.push(this.selectedTag);
             this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
                 this.moveToCurrentTag()
             })
@@ -164,7 +165,7 @@ export default {
                 // you can adjust it according to your needs.
                 if (view.name === 'Dashboard') {
                     // to reload home page
-                    this.$router.replace({path: '/redirect' + view.fullPath})
+                    this.$router.replace({path: view.fullPath})
                 } else {
                     this.$router.push('/')
                 }

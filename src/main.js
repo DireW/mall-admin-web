@@ -22,7 +22,12 @@ Vue.prototype.$axios = axios;
 import dayjs from 'dayjs';
 Vue.prototype.$dayjs = dayjs;
 
-Vue.use(ElementUI, {locale});
+import Cookies from 'js-cookie'
+
+Vue.use(ElementUI, {
+    size: Cookies.get('size') || 'medium',
+    locale
+});
 Vue.use(VCharts);
 
 Vue.config.productionTip = false;

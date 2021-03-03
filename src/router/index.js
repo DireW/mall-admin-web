@@ -32,6 +32,17 @@ export const constantRouterMap = [
     {path: '/login', component: () => import('@/views/login/index'), hidden: true},
     {path: '/404', component: () => import('@/views/404'), hidden: true},
     {
+        path: '/redirect',
+        component: Layout,
+        hidden: true,
+        children: [
+            {
+                path: '/redirect/:path(.*)',
+                component: () => import('@/views/redirect/index')
+            }
+        ]
+    },
+    {
         path: '',
         component: Layout,
         redirect: '/home',
@@ -309,15 +320,15 @@ export const asyncRouterMap = [
         meta: {title: '权限', icon: 'ums'},
         children: [
             {
-                path: 'admin',
-                name: 'admin',
-                component: () => import('@/views/ums/admin/index'),
-                meta: {title: '用户列表', icon: 'ums-admin'}
-            },
-            {
                 path: 'agency',
                 name: 'agency',
                 component: () => import('@/views/ums/agency/index'),
+                meta: {title: '区域门店', icon: 'login-mall'}
+            },
+            {
+                path: 'admin',
+                name: 'admin',
+                component: () => import('@/views/ums/admin/index'),
                 meta: {title: '员工列表', icon: 'ums-admin'}
             },
             {

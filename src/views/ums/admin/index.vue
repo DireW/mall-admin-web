@@ -8,13 +8,13 @@
                     style="float:right"
                     type="primary"
                     @click="handleSearchList()"
-                    size="small">
+                    >
                     查询搜索
                 </el-button>
                 <el-button
                     style="float:right;margin-right: 15px"
                     @click="handleResetSearch()"
-                    size="small">
+                    >
                     重置
                 </el-button>
             </div>
@@ -44,16 +44,24 @@
                     <template slot-scope="scope">{{scope.row.username}}</template>
                 </el-table-column>
                 <el-table-column label="姓名" align="center">
-                    <template slot-scope="scope">{{scope.row.nickName}}</template>
+                    <template slot-scope="scope">{{scope.row.realName}}</template>
                 </el-table-column>
+                <el-table-column label="手机号码" prop="phoneNumber" align="center" width="120" />
                 <el-table-column label="邮箱" align="center">
                     <template slot-scope="scope">{{scope.row.email}}</template>
                 </el-table-column>
-                <el-table-column label="添加时间" width="160" align="center">
-                    <template slot-scope="scope">{{scope.row.createTime | formatDateTime}}</template>
+                <el-table-column label="身份证号" width="170" align="center">
+                    <template slot-scope="scope">{{scope.row.idCard}}</template>
                 </el-table-column>
-                <el-table-column label="最后登录" width="160" align="center">
-                    <template slot-scope="scope">{{scope.row.loginTime | formatDateTime}}</template>
+                <el-table-column label="微信昵称" width="160" align="center">
+                    <template slot-scope="{row}">
+                        {{row.wechatUser ? row.wechatUser.nickName : '未绑定'}}
+                    </template>
+                </el-table-column>
+                <el-table-column label="微信头像" width="80" align="center">
+                    <template slot-scope="{row}">
+
+                    </template>
                 </el-table-column>
                 <el-table-column label="是否启用" width="140" align="center">
                     <template slot-scope="scope">
@@ -106,14 +114,28 @@
                 <el-form-item label="帐号：">
                     <el-input v-model="admin.username" style="width: 250px"></el-input>
                 </el-form-item>
+                <el-form-item label="密码：">
+                    <el-input v-model="admin.password" type="password" style="width: 250px"></el-input>
+                </el-form-item>
                 <el-form-item label="姓名：">
-                    <el-input v-model="admin.nickName" style="width: 250px"></el-input>
+                    <el-input v-model="admin.realName" style="width: 250px"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号码：">
+                    <el-input v-model="admin.phoneNumber" style="width: 250px"></el-input>
+                </el-form-item>
+                <el-form-item label="身份证号：">
+                    <el-input v-model="admin.idCard" style="width: 250px"></el-input>
+                </el-form-item>
+                <el-form-item label="性别：">
+                    <el-input v-model="admin.gender" style="width: 250px"></el-input>
+                    <el-select v-model="admin.gender">
+                        <el-option :value="0" label="未知"/>
+                        <el-option :value="1" label="男"/>
+                        <el-option :value="2" label="女"/>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="邮箱：">
                     <el-input v-model="admin.email" style="width: 250px"></el-input>
-                </el-form-item>
-                <el-form-item label="密码：">
-                    <el-input v-model="admin.password" type="password" style="width: 250px"></el-input>
                 </el-form-item>
                 <el-form-item label="备注：">
                     <el-input v-model="admin.note"
@@ -166,7 +188,10 @@ const defaultAdmin = {
     id: null,
     username: null,
     password: null,
-    nickName: null,
+    realName: null,
+    phoneNumber: null,
+    idCard: null,
+    gender: 1,
     email: null,
     note: null,
     status: 1
@@ -195,7 +220,7 @@ export default {
     filters: {
         formatDateTime(time) {
             if (time == null || time === '') {
-                return 'N/A';
+                return '-';
             }
             let date = new Date(time);
             return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
