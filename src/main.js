@@ -16,6 +16,8 @@ import store from './store'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import * as base64 from '@/utils/base64';
+
 import axios from '@/utils/request';
 Vue.prototype.$axios = axios;
 
@@ -31,6 +33,15 @@ Vue.use(ElementUI, {
 Vue.use(VCharts);
 
 Vue.config.productionTip = false;
+
+Vue.filter("lastTwoChars", (val = '') => {
+    const value = val === null ? '' : val;
+    if (value.length > 2) {
+        return value.substr(value.length - 2, 2);
+    } else {
+        return value;
+    }
+});
 
 new Vue({
     el: '#app',

@@ -167,4 +167,23 @@ a:hover {
         font-size: 12px;
     }
 }
+.td-cell-with-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .table-td-img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+    .table-td-img-text {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
 
