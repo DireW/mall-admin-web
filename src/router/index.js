@@ -154,10 +154,16 @@ export const asyncRouterMap = [
     {
         path: '/oms',
         component: Layout,
-        redirect: '/oms/order',
+        redirect: '/oms/process',
         name: 'oms',
         meta: {title: '订单', icon: 'order'},
         children: [
+            {
+                path: 'process',
+                name: 'process',
+                component: () => import('@/views/oms/process/index'),
+                meta: {title: '流程配置', icon: 'product-list'}
+            },
             {
                 path: 'order',
                 name: 'order',

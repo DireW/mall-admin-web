@@ -11,13 +11,13 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
-            '/admin': {
-                target: 'http://localhost:9080/',
-                changeOrigin: true,  //是否跨域
-                pathRewrite: {
-                    '^/admin': '/admin'   //需要rewrite重写的
-                }
-            },
+            // '/admin': {
+            //     target: 'http://localhost:9080/',
+            //     changeOrigin: true,  //是否跨域
+            //     pathRewrite: {
+            //         '^/admin': '/admin'   //需要rewrite重写的
+            //     }
+            // },
         },
 
         // Various Dev Server settings

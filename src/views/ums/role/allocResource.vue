@@ -1,5 +1,5 @@
 <template>
-    <el-card class="form-container" shadow="never">
+    <el-card class="form-container" shadow="never" style="width: 920px;">
         <div v-for="(cate,index) in allResourceCate" :class="index===0?'top-line':null" :key="'cate'+cate.id">
             <el-row class="table-layout" style="background: #F2F6FC;">
                 <el-checkbox v-model="cate.checked"
@@ -32,15 +32,19 @@ import {allocResource, listResourceByRole} from '@/api/role';
 
 export default {
     name: "allocResource",
+    props: {
+        roleId: {
+            type: Number,
+            default: null
+        }
+    },
     data() {
         return {
-            roleId: null,
             allResource: null,
             allResourceCate: null
         };
     },
     created() {
-        this.roleId = this.$route.query.roleId;
         this.getAllResourceCateList();
     },
     methods: {

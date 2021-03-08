@@ -125,15 +125,29 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="handleDialogConfirm()" size="small">确 定</el-button>
-      </span>
+                <el-button @click="dialogVisible = false" size="small">取 消</el-button>
+                <el-button type="primary" @click="handleDialogConfirm()" size="small">确 定</el-button>
+            </span>
+        </el-dialog>
+        <!--    分配菜单    -->
+        <el-dialog :title="allocMenuTitle" :visible.sync="allocMenuDialogVisible"
+                   top="40px" append-to-body
+                   width="720px" destroy-on-close :close-on-click-modal="false">
+            <alloc-menu :role-id="currentRoleId" @close-dialog="allocMenuDialogVisible = false" />
+        </el-dialog>
+        <!--    分配资源    -->
+        <el-dialog :title="allocResourceTitle" :visible.sync="allocResourceDialogVisible"
+                   top="40px" append-to-body
+                   width="920px" destroy-on-close :close-on-click-modal="false">
+            <alloc-resource :role-id="currentRoleId" @close-dialog="allocResourceDialogVisible = false" />
         </el-dialog>
     </div>
 </template>
 <script>
 import {fetchList, createRole, updateRole, updateStatus, deleteRole} from '@/api/role';
 import {formatDate} from '@/utils/date';
+import AllocMenu from "./allocMenu";
+import AllocResource from "./allocResource";
 
 const defaultListQuery = {
     pageNum: 1,
@@ -149,6 +163,7 @@ const defaultRole = {
 };
 export default {
     name: 'roleList',
+    components: {AllocResource, AllocMenu},
     data() {
         return {
             listQuery: Object.assign({}, defaultListQuery),
@@ -157,8 +172,20 @@ export default {
             listLoading: false,
             dialogVisible: false,
             role: Object.assign({}, defaultRole),
-            isEdit: false
+            isEdit: false,
+            currentRoleId: null,
+            currentRoleName: '',
+            allocMenuDialogVisible: false,
+            allocResourceDialogVisible: false,
         }
+    },
+    computed: {
+        allocMenuTitle() {
+            return `分配菜单 - ${this.currentRoleName}`;
+        },
+        allocResourceTitle() {
+            return `分配资源 - ${this.currentRoleName}`;
+        },
     },
     created() {
         this.getList();
@@ -266,10 +293,14 @@ export default {
             })
         },
         handleSelectMenu(index, row) {
-            this.$router.push({path: '/ums/allocMenu', query: {roleId: row.id}})
+            this.currentRoleId = row.id;
+            this.currentRoleName = row.name;
+            this.allocMenuDialogVisible = true;
         },
         handleSelectResource(index, row) {
-            this.$router.push({path: '/ums/allocResource', query: {roleId: row.id}})
+            this.currentRoleId = row.id;
+            this.currentRoleName = row.name;
+            this.allocResourceDialogVisible = true;
         },
         getList() {
             this.listLoading = true;

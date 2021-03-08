@@ -23,18 +23,22 @@ import {listMenuByRole, allocMenu} from '@/api/role';
 
 export default {
     name: "allocMenu",
+    props: {
+        roleId: {
+            type: Number,
+            default: null
+        }
+    },
     data() {
         return {
             menuTreeList: [],
             defaultProps: {
                 children: 'children',
                 label: 'title'
-            },
-            roleId: null
+            }
         };
     },
-    created() {
-        this.roleId = this.$route.query.roleId;
+    mounted() {
         this.treeList();
         this.getRoleMenu(this.roleId);
     },
@@ -85,7 +89,7 @@ export default {
                         type: 'success',
                         duration: 1000
                     });
-                    this.$router.back();
+                    this.$emit('close-dialog');
                 })
             })
         },

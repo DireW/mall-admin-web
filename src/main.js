@@ -42,6 +42,15 @@ Vue.filter("lastTwoChars", (val = '') => {
         return value;
     }
 });
+import {formatDate} from "./utils/date";
+
+Vue.filter('formatDate', (time = '') => {
+    if (time == null || time === '') {
+        return 'N/A';
+    }
+    let date = new Date(time);
+    return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
+});
 
 new Vue({
     el: '#app',
